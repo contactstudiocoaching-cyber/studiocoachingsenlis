@@ -49,6 +49,12 @@
       --header-height: 80px;
     }
 
+    html, body {
+      overflow-x: hidden;
+      width: 100%;
+      max-width: 100%;
+    }
+
     html {
       font-family: var(--font-sans);
       background-color: var(--bg-dark);
@@ -60,7 +66,6 @@
 
     body {
       min-height: 100vh;
-      overflow-x: hidden;
       display: flex;
       flex-direction: column;
     }
@@ -1294,6 +1299,136 @@
       .section-padding {
         padding: 64px 0;
       }
+
+      /* Hero Section Mobile Framing */
+      .hero-grid {
+        gap: 28px;
+      }
+      .hero-title {
+        font-size: clamp(1.85rem, 7vw, 2.4rem);
+        line-height: 1.15;
+        margin-bottom: 16px;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 24px;
+      }
+      .hero-image-wrap {
+        width: 100%;
+        position: relative;
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+      .hero-img {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        object-position: center 45%;
+        border-radius: var(--radius-lg);
+      }
+      .hero-floating-card {
+        position: static;
+        margin-top: 14px;
+        width: 100%;
+        left: auto;
+        bottom: auto;
+        justify-content: center;
+        padding: 12px 16px;
+      }
+      .hero-actions {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+        margin-bottom: 32px;
+      }
+      .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 0.95rem;
+      }
+      .hero-proof {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        padding-top: 20px;
+      }
+      .proof-num {
+        font-size: 1.25rem;
+      }
+      .proof-label {
+        font-size: 0.75rem;
+      }
+
+      /* Grids & Cards Mobile Framing */
+      .piliers-grid,
+      .equipement-grid,
+      .equipements-grid,
+      .audiences-grid,
+      .exigence-grid,
+      .coachs-grid,
+      .temoignages-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px;
+      }
+      .coachs-grid .coach-card {
+        grid-column: auto !important;
+      }
+
+      .equipement-card .equipement-img-wrap {
+        aspect-ratio: 16 / 10;
+      }
+      .equipement-card .equipement-img {
+        object-fit: cover;
+        object-position: center;
+      }
+      .equipement-card .equipement-body,
+      .equipement-card .equipement-content {
+        padding: 22px 20px;
+      }
+
+      .coach-card {
+        padding: 24px 20px;
+      }
+      .coach-profile {
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+      .coach-avatar,
+      .coach-avatar-monogram {
+        width: 72px;
+        height: 72px;
+        min-width: 72px;
+      }
+
+      .discovery-wrapper {
+        padding: 28px 18px !important;
+        gap: 32px;
+      }
+      .booking-box {
+        padding: 28px 20px;
+      }
+      .step-item {
+        gap: 14px;
+      }
+      .step-number {
+        width: 34px;
+        height: 34px;
+        min-width: 34px;
+        font-size: 0.9rem;
+      }
+
+      .contact-wrapper {
+        padding: 28px 18px !important;
+      }
+      .map-card {
+        padding: 24px 18px;
+      }
+
+      /* Footer Mobile */
       .footer-grid {
         grid-template-columns: 1fr;
         gap: 32px;
@@ -1302,6 +1437,28 @@
         flex-direction: column;
         gap: 16px;
         text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 18px;
+      }
+      .section-padding {
+        padding: 56px 0;
+      }
+      .hero-grid {
+        gap: 28px;
+      }
+      .hero-title {
+        font-size: clamp(1.85rem, 7vw, 2.4rem);
+        line-height: 1.15;
+        margin-bottom: 16px;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 24px;
       }
     }
   </style>
@@ -1530,7 +1687,7 @@
         </p>
       </div>
 
-      <div class="equipements-grid">
+      <div class="equipements-grid equipement-grid">
         <!-- Carte 1 : Espalier -->
         <div class="equipement-card">
           <div class="equipement-img-wrap">
@@ -1543,7 +1700,7 @@
               loading="lazy"
             >
           </div>
-          <div class="equipement-content">
+          <div class="equipement-content equipement-body">
             <div class="equipement-tag">Posturologie &amp; Étirements</div>
             <h3 class="equipement-title">L'Espalier WallBars</h3>
             <p class="equipement-desc">
@@ -1574,7 +1731,7 @@
               loading="lazy"
             >
           </div>
-          <div class="equipement-content">
+          <div class="equipement-content equipement-body">
             <div class="equipement-tag">Force Fonctionnelle</div>
             <h3 class="equipement-title">Les Haltères Swing en cuir</h3>
             <p class="equipement-desc">
@@ -1605,7 +1762,7 @@
               loading="lazy"
             >
           </div>
-          <div class="equipement-content">
+          <div class="equipement-content equipement-body">
             <div class="equipement-tag">Confort &amp; Intimité</div>
             <h3 class="equipement-title">Espace Vestiaires &amp; Cabines Privatives</h3>
             <p class="equipement-desc">
@@ -1643,7 +1800,7 @@
         </p>
       </div>
 
-      <div class="exigence-grid">
+      <div class="exigence-grid audiences-grid">
         <!-- 01 • Retrouver la forme & la vitalité -->
         <div class="exigence-card">
           <div class="exigence-header">
@@ -2016,7 +2173,7 @@
         </p>
       </div>
 
-      <div class="reviews-grid">
+      <div class="reviews-grid temoignages-grid">
         <!-- Avis 1 -->
         <div class="review-card">
           <div class="review-rating">
