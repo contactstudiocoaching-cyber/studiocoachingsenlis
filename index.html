@@ -1421,22 +1421,134 @@
         font-size: 0.9rem;
       }
 
+      /* Contact Section Mobile Centering & Framing */
+      #contact .section-tag {
+        margin: 0 auto 12px auto;
+        display: inline-flex;
+      }
+      #contact .section-title {
+        text-align: center !important;
+      }
+      #contact .contact-info > p {
+        text-align: center;
+        margin-bottom: 24px;
+      }
       .contact-wrapper {
-        padding: 28px 18px !important;
+        padding: 24px 16px !important;
+        gap: 24px !important;
+        grid-template-columns: 1fr !important;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-list {
+        margin: 0 0 24px 0 !important;
+        gap: 14px !important;
+      }
+      .contact-item {
+        padding: 16px !important;
+        border-radius: var(--radius-md) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-subtle) !important;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-detail {
+        flex: 1;
+        min-width: 0;
+        word-break: break-word;
       }
       .map-card {
-        padding: 24px 18px;
+        padding: 20px 14px !important;
+        border-radius: var(--radius-md) !important;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .map-header {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .map-header h4 {
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+        text-align: center;
+      }
+      .map-header p {
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      .map-features {
+        padding: 0;
+        margin-bottom: 20px;
+        list-style: none;
+      }
+      .map-features .list-item {
+        font-size: 0.88rem;
+        gap: 10px;
+        line-height: 1.4;
+        word-break: break-word;
+      }
+      .map-card .btn {
+        width: 100% !important;
+        padding: 13px 14px !important;
+        font-size: 0.9rem !important;
+        justify-content: center !important;
+        text-align: center !important;
+        white-space: normal !important;
+        box-sizing: border-box;
       }
 
-      /* Footer Mobile */
+      /* Footer Mobile Centering */
+      .footer {
+        padding: 48px 0 24px 0 !important;
+        text-align: center !important;
+      }
       .footer-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        margin-bottom: 32px !important;
+        text-align: center !important;
+      }
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-brand .brand-logo {
+        justify-content: center;
+        margin: 0 auto 12px auto;
+      }
+      .footer-brand p {
+        text-align: center;
+        margin: 12px auto 16px auto;
+        max-width: 360px;
+      }
+      .footer-title {
+        text-align: center;
+        margin-bottom: 12px;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        list-style: none;
+      }
+      .footer-links li {
+        text-align: center;
       }
       .footer-bottom {
         flex-direction: column;
-        gap: 16px;
+        gap: 10px;
         text-align: center;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        padding-top: 24px;
       }
     }
 
@@ -1459,6 +1571,136 @@
         font-size: 1rem;
         line-height: 1.5;
         margin-bottom: 24px;
+      }
+
+      /* Contact Section Mobile Centering & Framing (480px) */
+      #contact .section-tag {
+        margin: 0 auto 12px auto;
+        display: inline-flex;
+      }
+      #contact .section-title {
+        text-align: center !important;
+      }
+      #contact .contact-info > p {
+        text-align: center;
+        margin-bottom: 24px;
+      }
+      .contact-wrapper {
+        padding: 24px 16px !important;
+        gap: 24px !important;
+        grid-template-columns: 1fr !important;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-list {
+        margin: 0 0 24px 0 !important;
+        gap: 14px !important;
+      }
+      .contact-item {
+        padding: 16px !important;
+        border-radius: var(--radius-md) !important;
+        background: rgba(255, 255, 255, 0.02) !important;
+        border: 1px solid var(--border-subtle) !important;
+        display: flex;
+        align-items: center;
+        text-align: left;
+        gap: 14px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .contact-detail {
+        flex: 1;
+        min-width: 0;
+        word-break: break-word;
+      }
+      .map-card {
+        padding: 20px 14px !important;
+        border-radius: var(--radius-md) !important;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      .map-header {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .map-header h4 {
+        font-size: 1.15rem;
+        margin-bottom: 6px;
+        text-align: center;
+      }
+      .map-header p {
+        font-size: 0.9rem;
+        text-align: center;
+      }
+      .map-features {
+        padding: 0;
+        margin-bottom: 20px;
+        list-style: none;
+      }
+      .map-features .list-item {
+        font-size: 0.88rem;
+        gap: 10px;
+        line-height: 1.4;
+        word-break: break-word;
+      }
+      .map-card .btn {
+        width: 100% !important;
+        padding: 13px 14px !important;
+        font-size: 0.9rem !important;
+        justify-content: center !important;
+        text-align: center !important;
+        white-space: normal !important;
+        box-sizing: border-box;
+      }
+
+      /* Footer Mobile Centering (480px) */
+      .footer {
+        padding: 48px 0 24px 0 !important;
+        text-align: center !important;
+      }
+      .footer-grid {
+        grid-template-columns: 1fr !important;
+        gap: 28px !important;
+        margin-bottom: 32px !important;
+        text-align: center !important;
+      }
+      .footer-brand {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-brand .brand-logo {
+        justify-content: center;
+        margin: 0 auto 12px auto;
+      }
+      .footer-brand p {
+        text-align: center;
+        margin: 12px auto 16px auto;
+        max-width: 360px;
+      }
+      .footer-title {
+        text-align: center;
+        margin-bottom: 12px;
+      }
+      .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 0;
+        list-style: none;
+      }
+      .footer-links li {
+        text-align: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        font-size: 0.8rem;
+        line-height: 1.5;
+        padding-top: 24px;
       }
     }
   </style>
@@ -1642,7 +1884,7 @@
           </div>
           <h3 class="pilier-title">Équipements NOHRD en bois</h3>
           <p class="pilier-desc">
-            Des appareils d'ébénisterie artisanale en frêne massif et cuir véritable. Une ergonomie pensée pour préserver les articulations et offrir une résistance d'une grande fluidité.
+            Des appareils d'ébénisterie artisanale en chêne massif et cuir véritable. Une ergonomie pensée pour préserver les articulations et offrir une résistance d'une grande fluidité.
           </p>
         </div>
 
@@ -1704,7 +1946,7 @@
             <div class="equipement-tag">Posturologie &amp; Étirements</div>
             <h3 class="equipement-title">L'Espalier WallBars</h3>
             <p class="equipement-desc">
-              Pièce maîtresse du studio, cet espalier en frêne massif permet une décompression rachidienne progressive, des étirements profonds et un renforcement en suspension sécurisé.
+              Pièce maîtresse du studio, cet espalier en chêne massif permet une décompression rachidienne progressive, des étirements profonds et un renforcement en suspension sécurisé.
             </p>
             <ul class="equipement-features">
               <li class="list-item">
@@ -1775,7 +2017,7 @@
               </li>
               <li class="list-item">
                 <svg class="sc-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Atmosphère feutrée, serviettes et eau fraîche offertes</span>
+                <span>Atmosphère feutrée, calme et discrétion absolue</span>
               </li>
             </ul>
           </div>
@@ -1955,7 +2197,7 @@
             </li>
             <li class="list-item">
               <svg class="sc-icon" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              <span>Eau minérale et serviettes fournies</span>
+              <span>Bilan complet et conseils personnalisés inclus</span>
             </li>
           </ul>
 
