@@ -3073,5 +3073,579 @@
     });
   </script>
 
+
+<!-- ========================================== -->
+<!-- CHATBOT OFFICIEL — STUDIO COACHING SENLIS  -->
+<!-- ========================================== -->
+<style>
+  #sc-chatbot-widget {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999999;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  #sc-chatbot-btn {
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0F2537 0%, #00A3C4 100%);
+    box-shadow: 0 8px 24px rgba(0, 163, 196, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  #sc-chatbot-btn:hover {
+    transform: scale(1.06);
+    box-shadow: 0 10px 28px rgba(0, 163, 196, 0.6);
+  }
+  #sc-chatbot-btn svg {
+    width: 30px;
+    height: 30px;
+    fill: #ffffff;
+    transition: transform 0.3s ease;
+  }
+  .sc-badge-pulse {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 14px;
+    height: 14px;
+    background-color: #10B981;
+    border: 2px solid #0F2537;
+    border-radius: 50%;
+  }
+  #sc-chatbot-bubble {
+    position: absolute;
+    bottom: 74px;
+    right: 0;
+    background: #0F2537;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.4;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+    border: 1px solid rgba(0, 163, 196, 0.3);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+  #sc-chatbot-bubble.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+  #sc-chatbot-window {
+    position: absolute;
+    bottom: 76px;
+    right: 0;
+    width: 370px;
+    max-width: calc(100vw - 32px);
+    height: 540px;
+    max-height: calc(100vh - 110px);
+    background: #0B1724;
+    border-radius: 18px;
+    box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(0, 163, 196, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px) scale(0.96);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  #sc-chatbot-window.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+  .sc-chat-header {
+    background: linear-gradient(135deg, #0F2537 0%, #16364D 100%);
+    padding: 16px 18px;
+    border-bottom: 1px solid rgba(0, 163, 196, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sc-header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .sc-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #0B1724;
+    border: 1.5px solid #00A3C4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: #00A3C4;
+    letter-spacing: 0.5px;
+  }
+  .sc-header-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0;
+  }
+  .sc-header-sub {
+    font-size: 11.5px;
+    color: #38BDF8;
+    margin: 2px 0 0 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .sc-status-dot {
+    width: 7px;
+    height: 7px;
+    background: #10B981;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .sc-close-btn {
+    background: none;
+    border: none;
+    color: #94A3B8;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .sc-close-btn:hover {
+    color: #ffffff;
+  }
+  .sc-chat-body {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: #09121D;
+  }
+  .sc-chat-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  .sc-chat-body::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+  }
+  .sc-msg {
+    max-width: 85%;
+    padding: 11px 15px;
+    font-size: 13.5px;
+    line-height: 1.45;
+    border-radius: 14px;
+    word-wrap: break-word;
+  }
+  .sc-msg-bot {
+    align-self: flex-start;
+    background: #142436;
+    color: #E2E8F0;
+    border-bottom-left-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .sc-msg-bot strong {
+    color: #38BDF8;
+  }
+  .sc-msg-user {
+    align-self: flex-end;
+    background: #00A3C4;
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+  }
+  .sc-quick-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .sc-quick-btn {
+    background: rgba(0, 163, 196, 0.08);
+    border: 1px solid rgba(0, 163, 196, 0.35);
+    color: #E0F2FE;
+    padding: 9px 13px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    text-align: left;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sc-quick-btn:hover {
+    background: rgba(0, 163, 196, 0.2);
+    border-color: #00A3C4;
+    transform: translateX(2px);
+  }
+  .sc-chat-footer {
+    padding: 12px;
+    background: #0B1724;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    gap: 8px;
+  }
+  .sc-chat-input {
+    flex: 1;
+    background: #142436;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    padding: 10px 14px;
+    border-radius: 22px;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .sc-chat-input:focus {
+    border-color: #00A3C4;
+  }
+  .sc-send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #00A3C4;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .sc-send-btn:hover {
+    background: #0288D1;
+    transform: scale(1.05);
+  }
+  .sc-send-btn svg {
+    width: 16px;
+    height: 16px;
+    fill: #ffffff;
+    margin-left: 2px;
+  }
+  .sc-btn-primary-link {
+    display: inline-block;
+    background: #00A3C4;
+    color: #ffffff !important;
+    text-decoration: none;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 12.5px;
+    margin-top: 8px;
+    text-align: center;
+    transition: background 0.2s;
+  }
+  .sc-btn-primary-link:hover {
+    background: #0288D1;
+  }
+  .sc-form-field {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 8px 10px;
+    background: #09121D;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 12.5px;
+    box-sizing: border-box;
+  }
+  .sc-form-field:focus {
+    border-color: #00A3C4;
+    outline: none;
+  }
+</style>
+
+<!-- Hidden form for Netlify automated lead submission -->
+<form name="contact-chatbot" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="contact-chatbot" />
+  <input type="text" name="nom" />
+  <input type="email" name="email" />
+  <input type="tel" name="telephone" />
+  <input type="text" name="message" />
+</form>
+
+<div id="sc-chatbot-widget">
+  <div id="sc-chatbot-bubble" onclick="scToggleChat(true)">
+    👋 Une question sur le studio ou votre dos ?
+  </div>
+
+  <button id="sc-chatbot-btn" onclick="scToggleChat()" aria-label="Ouvrir le chat">
+    <span class="sc-badge-pulse"></span>
+    <svg id="sc-icon-chat" viewBox="0 0 24 24">
+      <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.2L4 17.2V4h16v12z"/>
+    </svg>
+    <svg id="sc-icon-close" viewBox="0 0 24 24" style="display:none;">
+      <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
+  </button>
+
+  <div id="sc-chatbot-window">
+    <div class="sc-chat-header">
+      <div class="sc-header-info">
+        <div class="sc-avatar">SC</div>
+        <div>
+          <h4 class="sc-header-title">Studio Coaching Senlis</h4>
+          <div class="sc-header-sub">
+            <span class="sc-status-dot"></span> Assistant Studio • En ligne
+          </div>
+        </div>
+      </div>
+      <button class="sc-close-btn" onclick="scToggleChat(false)" aria-label="Fermer">✕</button>
+    </div>
+
+    <div class="sc-chat-body" id="sc-chat-body">
+      <!-- Initial Welcome Message -->
+      <div class="sc-msg sc-msg-bot">
+        Bonjour et bienvenue chez <strong>Studio Coaching Senlis</strong> ! 👋<br><br>
+        Je suis l'assistant en ligne de Jérémy. Que vous souhaitiez soulager des tensions, reprendre le sport en toute sécurité ou découvrir notre approche sur-mesure, comment puis-je vous aider ?
+        
+        <div class="sc-quick-actions" id="sc-main-actions">
+          <button class="sc-quick-btn" onclick="scHandleAction('dos')">
+            🩺 J'ai mal au dos / douleurs articulaires
+          </button>
+          <button class="sc-quick-btn" onclick="scHandleAction('decouverte')">
+            ✨ Comment se passe la Séance Découverte ?
+          </button>
+          <button class="sc-quick-btn" onclick="scHandleAction('acces')">
+            📍 Lieu, Horaires & Accès
+          </button>
+          <button class="sc-quick-btn" onclick="scHandleAction('rappel')">
+            📞 Être rappelé(e) par l'équipe
+          </button>
+          <button class="sc-quick-btn" onclick="scHandleAction('reserver')">
+            📅 Réserver ma Séance Découverte (50 €)
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sc-chat-footer">
+      <input type="text" id="sc-user-input" class="sc-chat-input" placeholder="Posez votre question ici..." onkeydown="if(event.key==='Enter') scSendMsg();" />
+      <button class="sc-send-btn" onclick="scSendMsg()" aria-label="Envoyer">
+        <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let scChatOpen = false;
+  let scCaptureState = null;
+  let scLeadData = {};
+
+  function scToggleChat(forceState) {
+    scChatOpen = typeof forceState === 'boolean' ? forceState : !scChatOpen;
+    const win = document.getElementById('sc-chatbot-window');
+    const bubble = document.getElementById('sc-chatbot-bubble');
+    const iconChat = document.getElementById('sc-icon-chat');
+    const iconClose = document.getElementById('sc-icon-close');
+
+    if (scChatOpen) {
+      win.classList.add('open');
+      bubble.classList.remove('show');
+      iconChat.style.display = 'none';
+      iconClose.style.display = 'block';
+      setTimeout(() => document.getElementById('sc-user-input').focus(), 300);
+    } else {
+      win.classList.remove('open');
+      iconChat.style.display = 'block';
+      iconClose.style.display = 'none';
+    }
+  }
+
+  // Show bubble after 4 seconds
+  setTimeout(function() {
+    if (!scChatOpen) {
+      const bubble = document.getElementById('sc-chatbot-bubble');
+      if (bubble) bubble.classList.add('show');
+    }
+  }, 4000);
+
+  function scAppendBotMsg(html) {
+    const body = document.getElementById('sc-chat-body');
+    const msg = document.createElement('div');
+    msg.className = 'sc-msg sc-msg-bot';
+    msg.innerHTML = html;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function scAppendUserMsg(text) {
+    const body = document.getElementById('sc-chat-body');
+    const msg = document.createElement('div');
+    msg.className = 'sc-msg sc-msg-user';
+    msg.textContent = text;
+    body.appendChild(msg);
+    body.scrollTop = body.scrollHeight;
+  }
+
+  function scHandleAction(type) {
+    if (type === 'dos') {
+      scAppendUserMsg("J'ai mal au dos ou des douleurs articulaires");
+      setTimeout(() => {
+        scAppendBotMsg(
+          "C'est précisément la spécialité de notre studio ! 🧘‍♂️<br><br>" +
+          "Ici, aucun mouvement traumatisant ni machine de musculation classique. Nous travaillons sur la <strong>décompression vertébrale</strong>, le renforcement des chaînes profondes et la mobilité douce grâce à nos équipements en bois <strong>NOHRD</strong>.<br><br>" +
+          "Chaque exercice est adapté millimètre par millimètre à vos pathologies (hernie, sciatique, arthrose, raideurs matinales).<br><br>" +
+          "Le meilleur moyen de ressentir ce soulagement est de réaliser votre <strong>Séance Découverte privée (1h)</strong>.<br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Réserver ma séance (50 €) →</a>"
+        );
+      }, 500);
+    } else if (type === 'decouverte') {
+      scAppendUserMsg("Comment se passe la Séance Découverte ?");
+      setTimeout(() => {
+        scAppendBotMsg(
+          "La Séance Découverte dure <strong>1 heure complète</strong> et le studio vous est <strong>totalement privatisé</strong> :<br><br>" +
+          "1️⃣ <strong>Écoute & Échange :</strong> Analyse de votre historique, vos douleurs, vos antécédents médicaux et vos objectifs.<br>" +
+          "2️⃣ <strong>Bilan postural complet :</strong> Check-up biomécanique (souplesse, équilibre, mobilité articulaire).<br>" +
+          "3️⃣ <strong>Mise en mouvement personnalisée :</strong> Exercices adaptés en douceur sur notre matériel en bois sans impact.<br><br>" +
+          "Elle est au tarif de 50 € (réglée en ligne pour bloquer le créneau avec votre coach dédié).<br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Bloquer mon créneau découverte →</a>"
+        );
+      }, 500);
+    } else if (type === 'acces') {
+      scAppendUserMsg("Où se situe le studio et quels sont les horaires ?");
+      setTimeout(() => {
+        scAppendBotMsg(
+          "📍 <strong>Studio Coaching Senlis</strong> :<br>" +
+          "8 Impasse de la Chaufferette, 60300 Senlis (dans l'hypercentre historique, au calme d'une impasse juste à côté du salon de thé <em>Le Comptoir Senlisien</em>).<br><br>" +
+          "🕒 <strong>Horaires sur rendez-vous :</strong><br>" +
+          "• Lundi au Vendredi : 07h00 - 20h00<br>" +
+          "• Samedi : 07h00 - 18h00<br>" +
+          "• Dimanche : Fermé<br><br>" +
+          "Besoin d'un renseignement direct ?<br>" +
+          "📞 <a href='tel:0786095209' style='color:#38BDF8; text-decoration:none;'>07 86 09 52 09</a>"
+        );
+      }, 500);
+    } else if (type === 'reserver') {
+      scAppendUserMsg("Je souhaite réserver ma Séance Découverte");
+      setTimeout(() => {
+        scAppendBotMsg(
+          "Excellente décision pour prendre soin de votre corps ! ✨<br><br>" +
+          "La Séance Découverte privée (1h seul(e) avec votre coach) est à 50 € TTC.<br><br>" +
+          "👉 Cliquez ci-dessous pour régler votre séance en ligne en toute sécurité via Stripe. Dès validation, notre équipe vous contacte immédiatement pour fixer votre jour et horaire de prédilection :<br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Payer ma séance découverte (50 €) →</a>"
+        );
+      }, 500);
+    } else if (type === 'rappel') {
+      scAppendUserMsg("J'aimerais être rappelé(e) par l'équipe");
+      setTimeout(() => {
+        scCaptureState = 'nom';
+        scAppendBotMsg(
+          "Avec grand plaisir ! Pour que Paméla ou Jérémy puisse vous recontacter, quel est votre <strong>Prénom et Nom</strong> ?"
+        );
+      }, 500);
+    }
+  }
+
+  function scSendMsg() {
+    const input = document.getElementById('sc-user-input');
+    const val = input.value.trim();
+    if (!val) return;
+    input.value = '';
+
+    scAppendUserMsg(val);
+
+    // If capturing lead details
+    if (scCaptureState === 'nom') {
+      scLeadData.nom = val;
+      scCaptureState = 'tel';
+      setTimeout(() => {
+        scAppendBotMsg("Enchanté(e) " + val + " ! À quel <strong>numéro de téléphone</strong> pouvons-nous vous joindre ?");
+      }, 500);
+      return;
+    } else if (scCaptureState === 'tel') {
+      scLeadData.telephone = val;
+      scCaptureState = 'email';
+      setTimeout(() => {
+        scAppendBotMsg("Parfait. Quelle est votre <strong>adresse e-mail</strong> pour vous transmettre les détails d'accès au studio ?");
+      }, 500);
+      return;
+    } else if (scCaptureState === 'email') {
+      scLeadData.email = val;
+      scCaptureState = 'objectif';
+      setTimeout(() => {
+        scAppendBotMsg("Dernière question : quel est votre <strong>objectif principal ou douleur</strong> (mal de dos, reprise, posture, perte de poids) ?");
+      }, 500);
+      return;
+    } else if (scCaptureState === 'objectif') {
+      scLeadData.message = val;
+      scCaptureState = null;
+
+      // Submit via Netlify form
+      try {
+        const formData = new URLSearchParams();
+        formData.append('form-name', 'contact-chatbot');
+        formData.append('nom', scLeadData.nom || '');
+        formData.append('telephone', scLeadData.telephone || '');
+        formData.append('email', scLeadData.email || '');
+        formData.append('message', scLeadData.message || '');
+
+        fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: formData.toString()
+        }).catch(() => {});
+      } catch(e) {}
+
+      setTimeout(() => {
+        scAppendBotMsg(
+          "🎉 Merci beaucoup " + (scLeadData.nom ? scLeadData.nom.split(' ')[0] : '') + " !<br><br>" +
+          "Vos coordonnées ont bien été transmises à Jérémy et Paméla. Nous vous rappellerons très vite pour échanger sur vos objectifs et répondre à toutes vos questions.<br><br>" +
+          "À très bientôt au studio !"
+        );
+      }, 600);
+      return;
+    }
+
+    // Keyword detection
+    const lower = val.toLowerCase();
+    setTimeout(() => {
+      if (lower.includes('dos') || lower.includes('hernie') || lower.includes('douleur') || lower.includes('sciatique') || lower.includes('articulation')) {
+        scAppendBotMsg(
+          "Le soulagement du dos est au cœur de notre méthode biomécanique. Grâce au travail en décharge et aux équipements NOHRD, nous éliminons toute compression articulaire.<br><br>" +
+          "Souhaitez-vous planifier une <strong>Séance Découverte (1h)</strong> pour faire le point avec Jérémy ?<br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Réserver mon bilan (50 €) →</a>"
+        );
+      } else if (lower.includes('tarif') || lower.includes('prix') || lower.includes('cout') || lower.includes('coût') || lower.includes('combien') || lower.includes('abonnement')) {
+        scAppendBotMsg(
+          "Chaque accompagnement chez Studio Coaching Senlis est 100% sur-mesure (en individuel ou petits groupes de 5 personnes maximum).<br><br>" +
+          "Pour déterminer la formule la plus adaptée à vos besoins et votre rythme, tout commence par la <strong>Séance Découverte d'1h (50 €)</strong>. Vous venez, vous testez le studio en privé, et nous construisons votre programme sans aucun engagement.<br><br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Réserver ma séance découverte →</a>"
+        );
+      } else if (lower.includes('adresse') || lower.includes('où') || lower.includes('ou') || lower.includes('senlis') || lower.includes('horaire') || lower.includes('quand')) {
+        scAppendBotMsg(
+          "Le studio se situe au <strong>8 Impasse de la Chaufferette à Senlis</strong> (à côté du Comptoir Senlisien).<br>Nous vous accueillons du lundi au vendredi de 7h à 20h et le samedi de 7h à 18h sur rendez-vous."
+        );
+      } else if (lower.includes('rappel') || lower.includes('contact') || lower.includes('téléphone') || lower.includes('telephone') || lower.includes('appeler')) {
+        scCaptureState = 'nom';
+        scAppendBotMsg("Avec plaisir ! Quel est votre <strong>Prénom et Nom</strong> pour que nous puissions vous recontacter ?");
+      } else {
+        scAppendBotMsg(
+          "Merci pour votre message ! Pour vous apporter une réponse personnalisée, vous pouvez nous joindre directement au <strong>07 86 09 52 09</strong> ou réserver votre <strong>Séance Découverte 1h (50 €)</strong> :<br>" +
+          "<a href='https://buy.stripe.com/eVq5kEfBLdYT5cFf0C7wA0h' target='_blank' class='sc-btn-primary-link'>Réserver ma séance (50 €) →</a>"
+        );
+      }
+    }, 600);
+  }
+</script>
+<!-- ========================================== -->
+<!-- FIN CHATBOT OFFICIEL                       -->
+<!-- ========================================== -->
+
 </body>
 </html>
